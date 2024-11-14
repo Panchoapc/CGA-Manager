@@ -1,16 +1,18 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from core.models import BaseModel, Role
 
-class Employee(BaseModel):
-    """Represents an employee in the factory."""
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
-    rut = models.CharField(max_length=12, unique=True)  # Unique employee identifier
+class Employee(AbstractUser):
+    """Custom user model using RUT as the unique identifier for login."""
+    username = None  # Remove the default username field
+    rut = models.CharField(max_length=10, unique=True)  # Unique identifier
     role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, related_name='employees')
 
+    USERNAME_FIELD = 'rut'  # Set RUT as the username field for authentication
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']  # Fields required when creating a user
+
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.last_name} - {self.role.name}"
 
 class ShiftAssignment(BaseModel):
     """Records employee assignments to shifts."""

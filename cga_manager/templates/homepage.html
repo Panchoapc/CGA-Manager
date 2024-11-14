@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.first_name }}!</h1>
+
+    {% if user.role.name == "Admin" %}
+        <h2>All Machines</h2>
+        <ul>
+            {% for machine in machines %}
+                <li>{{ machine.name }}</li>
+            {% empty %}
+                <li>No machines available.</li>
+            {% endfor %}
+        </ul>
+
+        <h2>All Products</h2>
+        <ul>
+            {% for product in products %}
+                <li>{{ product.name }} - {{ product.product_type.name }} units</li>
+            {% empty %}
+                <li>No products available.</li>
+            {% endfor %}
+        </ul>
+
+        <h2>All Employees</h2>
+        <ul>
+            {% for employee in employees %}
+                <li>{{ employee.first_name }} {{ employee.last_name }} - Role: {{ employee.role.name }}</li>
+            {% empty %}
+                <li>No employees available.</li>
+            {% endfor %}
+        </ul>
+
+    {% elif user.role.name == "Supervisor" %}
+        <h2>Hello, {{ user.first_name }}! Here is a list of all workers:</h2>
+        <ul>
+            {% for employee in employees %}
+                <li>{{ employee.first_name }} {{ employee.last_name }}</li>
+            {% empty %}
+                <li>No workers available.</li>
+            {% endfor %}
+        </ul>
+
+    {% elif user.role.name == "Worker" %}
+        <h2>{{ message }}</h2>
+    {% else %}
+        <p>Role not recognized.</p>
+    {% endif %}
+</body>
+</html>
