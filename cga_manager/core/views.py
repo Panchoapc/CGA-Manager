@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from human_resources.models import Employee
-from production.models import Machine
+from production.models import Machine, ProductionEntry
 from warehouse.models import Product
 
 @login_required
@@ -19,7 +19,8 @@ def homepage(request):
         # Display a welcome message and list of all workers
         context["employees"] = Employee.objects.filter(role__name="Worker")
     elif user.role.name == "Worker":
-        # Display a simple welcome message for Workers
+        # Display a welcome message and recent production entries for Workers
         context["message"] = f"Hello, {user.first_name}!"
+        context["recent_productions"] = ProductionEntry.objects.filter(worker=user).order_by('-created_at')[:5]
 
     return render(request, 'homepage.html', context)

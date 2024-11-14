@@ -46,3 +46,13 @@ class MachineUsage(models.Model):
 
     def __str__(self):
         return f"{self.machine.name} on {self.daily_shift} - Yield: {self.yield_amount}"
+    
+class ProductionEntry(models.Model):
+    worker = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="production_entries")
+    machine = models.ForeignKey(Machine, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.worker} - {self.machine} - {self.product} - {self.quantity}"

@@ -7,6 +7,11 @@
 <body>
     <h1>Welcome, {{ user.first_name }}!</h1>
 
+    {% if user.is_authenticated %}
+        <a href="{% url 'add_production' %}">
+            <button type="button">Log Production</button>
+        </a>
+    {% endif %}
     {% if user.role.name == "Admin" %}
         <h2>All Machines</h2>
         <ul>
@@ -47,6 +52,20 @@
 
     {% elif user.role.name == "Worker" %}
         <h2>{{ message }}</h2>
+
+        <h2>Your Recent Production Entries</h2>
+        <ul>
+            {% for entry in recent_productions %}
+                <li>
+                    Machine: {{ entry.machine.name }} |
+                    Product: {{ entry.product.name }} ({{ entry.product.product_type.name }}, {{ entry.product.brand.name }}) |
+                    Quantity: {{ entry.quantity }} |
+                    Date: {{ entry.created_at|date:"Y-m-d H:i" }}
+                </li>
+            {% empty %}
+                <li>No recent production entries found.</li>
+            {% endfor %}
+        </ul>
     {% else %}
         <p>Role not recognized.</p>
     {% endif %}
