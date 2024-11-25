@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Machines List</title>
+</head>
+<body>
+    <h1>Machines</h1>
+    <a href="{% url 'machine_create' %}">Add New Machine</a>
+    <ul>
+        {% for machine in machines %}
+            <li>
+                {{ machine.name }}
+                <a href="{% url 'machine_update' machine.pk %}">Edit</a>
+                <a href="{% url 'machine_delete' machine.pk %}">Delete</a>
+            </li>
+        {% empty %}
+            <li>No machines available.</li>
+        {% endfor %}
+    </ul>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

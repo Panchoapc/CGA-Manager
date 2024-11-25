@@ -1,0 +1,14 @@
+<h2>Past Production</h2>
+<ul>
+    {% for production in past_productions %}
+        <li>
+            Machine: {{ production.machine.name }},
+            Product: {{ production.product.name }},
+            Quantity: {{ production.quantity }},
+            Worker: {{ production.worker.first_name }} {{ production.worker.last_name }},
+            Date: {{ production.created_at|date:"Y-m-d H:i" }}
+        </li>
+    {% empty %}
+        <li>No past production entries available.</li>
+    {% endfor %}
+</ul>

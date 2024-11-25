@@ -1,0 +1,8 @@
+<h2>Working Machines</h2>
+<ul>
+    {% for machine in working_machines %}
+        <li>{{ machine.name }} - Assigned Worker: {{ machine.assigned_worker.first_name }} {{ machine.assigned_worker.last_name }}</li>
+    {% empty %}
+        <li>No machines currently working.</li>
+    {% endfor %}
+</ul>

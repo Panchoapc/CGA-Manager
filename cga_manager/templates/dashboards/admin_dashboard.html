@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <h2>Manage Entities</h2>
+    <ul>
+        <li><a href="{% url 'machine_list' %}">Manage Machines</a></li>
+    </ul>
+
+    <h2>All Machines</h2>
+    {% include "production/working_machines.html" %}
+
+    <h2>All Products</h2>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }} - {{ product.product_type.name }} units</li>
+        {% empty %}
+            <li>No products available.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>All Employees</h2>
+    <ul>
+        {% for employee in employees %}
+            <li>{{ employee.first_name }} {{ employee.last_name }} - Role: {{ employee.role.name }}</li>
+        {% empty %}
+            <li>No employees available.</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

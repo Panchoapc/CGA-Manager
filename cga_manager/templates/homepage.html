@@ -11,6 +11,10 @@
         <a href="{% url 'add_production' %}">
             <button type="button">Log Production</button>
         </a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
     {% endif %}
     {% if user.role.name == "Admin" %}
         <h2>All Machines</h2>

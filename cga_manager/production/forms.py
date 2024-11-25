@@ -22,4 +22,4 @@ class ProductionForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Customizing product dropdown display with combined information
         self.fields['product'].queryset = Product.objects.all()
-        self.fields['product'].label_from_instance = lambda obj: f"{obj.name} ({obj.product_type.name}, {obj.brand.name})"
+        self.fields['product'].label_from_instance = lambda obj: f"{obj.name} (x{obj.product_type.name}, {obj.brand.name})"

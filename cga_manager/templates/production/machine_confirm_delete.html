@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Machine</title>
+</head>
+<body>
+    <h1>Delete Machine</h1>
+    <p>Are you sure you want to delete "{{ object.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+        <a href="{% url 'machine_list' %}">Cancel</a>
+    </form>
+</body>
+</html>

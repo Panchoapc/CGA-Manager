@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Worker Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.first_name }}!</h1>
+
+    <h3>Your Recent Production Entries</h3>
+    <ul>
+        {% for entry in recent_productions %}
+            <li>
+                Machine: {{ entry.machine.name }} |
+                Product: {{ entry.product.name }} ({{ entry.product.product_type.name }}, {{ entry.product.brand.name }}) |
+                Quantity: {{ entry.quantity }} |
+                Date: {{ entry.created_at|date:"Y-m-d H:i" }}
+            </li>
+        {% empty %}
+            <li>No recent production entries found.</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Supervisor Dashboard</title>
+</head>
+<body>
+    <h1>Supervisor Dashboard</h1>
+
+    <h2>Working Machines</h2>
+    {% include "production/working_machines.html" %}
+
+    <h2>All Workers</h2>
+    <ul>
+        {% for employee in employees %}
+            <li>{{ employee.first_name }} {{ employee.last_name }}</li>
+        {% empty %}
+            <li>No workers available.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Past Production Entries</h2>
+    <ul>
+        {% for entry in past_productions %}
+            <li>
+                Machine: {{ entry.machine.name }} |
+                Product: {{ entry.product.name }} ({{ entry.product.product_type.name }}, {{ entry.product.brand.name }}) |
+                Quantity: {{ entry.quantity }} |
+                Date: {{ entry.created_at|date:"Y-m-d H:i" }}
+            </li>
+        {% empty %}
+            <li>No past production entries available.</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
